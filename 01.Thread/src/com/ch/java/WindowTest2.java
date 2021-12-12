@@ -1,7 +1,7 @@
-package com.ch.java.thread.java;
+package com.ch.java;
 
 /**
- * 例子：创建三个窗口卖票，总票数100张
+ * 例子：创建三个窗口卖票，总票数100张。使用继承Thread类的方式。
  *
  * @author chenpi
  * @create 2021-12-12 16:01
@@ -24,7 +24,7 @@ class Window extends Thread {
     }
 }
 
-public class WindowTest {
+public class WindowTest2 {
     public static void main(String[] args) {
         Window t1 = new Window();
         Window t2 = new Window();

@@ -1,4 +1,4 @@
-package com.ch.java.thread.java;
+package com.ch.java;
 
 /**
  * 创建多线程的方式二：实现Runnable接口
