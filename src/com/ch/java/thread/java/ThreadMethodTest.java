@@ -10,31 +10,52 @@ package com.ch.java.thread.java;
  * 6.yield() 释放当前cpu的执行权
  * 7.join() 在线程a中调用进程b的join() ，此时a线程就进入阻塞状态，
  * 直到线程b完全执行完以后，线程a才结束阻塞状态。
- * 8.sleep(long millis)
+ * 8.sleep(long millis) 让当前线程“睡眠”指定的毫秒。在指定的毫秒时间内，当前线程是阻塞状态。
+ * <p>
+ * 9.isAlive() 判断当前线程是否存活
+ * <p>
+ * <p>
+ * 线程的优先级：
+ * 1.
+ * MIN_PRIORITY = 1
+ * NORM_PRIORITY = 5
+ * MAX_PRIORITY = 10
+ * <p>
+ * 2.如何获取和设置当前线程的优先级
+ * setPriority(int p)
+ * getPriority()
  *
  * @author chenpi
  * @create 2021-12-08 14:52
  */
 public class ThreadMethodTest {
     public static void main(String[] args) {
+
+        //给分线程命名
         HelloThread h1 = new HelloThread("线程一");
+        //给分线程设定优先级
+        h1.setPriority(Thread.MAX_PRIORITY);
         h1.start();
+
 
         //给主线程命名
         Thread.currentThread().setName("主线程");
+        //给分线程设定优先级
+        Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
         for (int i = 0; i < 100; i++) {
             if (i % 2 == 0) {
-                System.out.println(Thread.currentThread().getName() + ":" + i);
+                System.out.println(Thread.currentThread().getName() + ":" + Thread.currentThread().getPriority() + ":" + i);
             }
 
-            if (i==20){
-                try {
-                    h1.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+//            if (i == 20) {
+//                try {
+//                    h1.join();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
         }
+        System.out.println(h1.isAlive());
     }
 }
 
@@ -43,7 +64,12 @@ class HelloThread extends Thread {
     public void run() {
         for (int i = 0; i < 100; i++) {
             if (i % 2 == 0) {
-                System.out.println(Thread.currentThread().getName() + ":" + i);
+//                try {
+//                    sleep(10);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+                System.out.println(Thread.currentThread().getName() + ":" + Thread.currentThread().getPriority() + ":" + i);
             }
 
             if (i % 20 == 0) {
