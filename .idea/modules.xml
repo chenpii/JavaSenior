@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/01.Thread/01.Thread.iml" filepath="$PROJECT_DIR$/01.Thread/01.Thread.iml" />
       <module fileurl="file://$PROJECT_DIR$/02.Thread/02.Thread.iml" filepath="$PROJECT_DIR$/02.Thread/02.Thread.iml" />
+      <module fileurl="file://$PROJECT_DIR$/03.String/03.String.iml" filepath="$PROJECT_DIR$/03.String/03.String.iml" />
       <module fileurl="file://$PROJECT_DIR$/JavaSenior.iml" filepath="$PROJECT_DIR$/JavaSenior.iml" />
     </modules>
   </component>
