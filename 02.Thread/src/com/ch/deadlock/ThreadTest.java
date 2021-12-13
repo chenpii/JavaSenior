@@ -1,4 +1,4 @@
-package deadlock;
+package com.ch.deadlock;
 
 /**
  * 演示线程的死锁问题

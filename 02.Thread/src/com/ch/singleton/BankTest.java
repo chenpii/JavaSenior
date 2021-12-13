@@ -1,4 +1,4 @@
-package java1;
+package com.ch.singleton;
 
 /**
  * 使用同步机制将单例模式中的懒汉式改写成线程安全的
