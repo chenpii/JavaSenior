@@ -28,32 +28,34 @@ class Clerk {
     private final int MAX_SIZE = 20;
 
     //生产产品
-    public void produceProduct() {
+    public synchronized void produceProduct() {
         if (productCount < MAX_SIZE) {
             productCount++;
             System.out.println(Thread.currentThread().getName() + ":开始生产第" + productCount + "个产品");
+            notify();
         } else {
             //等待
-//            try {
-//                wait();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     //消费产品
-    public void consumeProduct() {
+    public synchronized void consumeProduct() {
         if (productCount > 0) {
-            productCount--;
             System.out.println(Thread.currentThread().getName() + "：开始消费第" + productCount + "个产品");
+            productCount--;
+            notify();
         } else {
             //等待
-//            try {
-//                wait();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
