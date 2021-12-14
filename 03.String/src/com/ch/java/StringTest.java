@@ -32,4 +32,27 @@ public class StringTest {
         System.out.println(s1);//abc
         System.out.println(s2);//mbc
     }
+
+    @Test
+    public void test4() {
+
+        //方式一：字面量定义
+        //此时s1和s2的数据声明在方法区中的字符串常量池中。
+        String s1 = "abc";
+        String s2 = "abc";
+        //方式二：new+构造器
+        //此时s3和s4保存的地址值，是数据在堆空间中开辟以后对应的地址。
+        String s3 = new String("abc");
+        String s4 = new String("abc");
+        System.out.println(s1 == s2);//true
+        System.out.println(s1 == s3);//false
+        System.out.println(s1 == s4);//false
+        System.out.println(s3 == s4);//false
+
+        Person p1 = new Person("小明",21);
+        Person p2 = new Person("小明",21);
+
+        System.out.println(p1.name== p2.name);
+
+    }
 }
