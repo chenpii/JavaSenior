@@ -49,10 +49,38 @@ public class StringTest {
         System.out.println(s1 == s4);//false
         System.out.println(s3 == s4);//false
 
-        Person p1 = new Person("小明",21);
-        Person p2 = new Person("小明",21);
+        Person p1 = new Person("小明", 21);
+        Person p2 = new Person("小明", 21);
 
-        System.out.println(p1.name== p2.name);
+        System.out.println(p1.name == p2.name);
+
+    }
+
+    @Test
+    public void test5() {
+        String s1 = "javasee";
+        String s2 = "hello";
+
+        String s3 = "javaseehello";
+        String s4 = "javasee" + "hello";
+        String s5 = s1 + "hello";
+        String s6 = "javasee" + s2;
+        String s7 = s1 + s2;
+        String s8 = (s1 + s2).intern();
+
+        System.out.println(s3 == s4);//true
+        System.out.println(s3 == s5);//false
+        System.out.println(s3 == s6);//false
+        System.out.println(s3 == s7);//false
+        System.out.println(s5 == s6);//false
+        System.out.println(s5 == s7);//false
+        System.out.println(s6 == s7);//false
+        System.out.println(s3 == s8);//true
+
+    }
+
+    @Test
+    public void test6() {
 
     }
 }
