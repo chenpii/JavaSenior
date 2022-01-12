@@ -145,5 +145,10 @@ public class DateTimeTest {
         Date date1 =new Date();
         calendar.setTime(date1);
         System.out.println(calendar.get(Calendar.DAY_OF_MONTH));
+
+        //获取月份，当前1月，返回0
+        System.out.println(calendar.get(Calendar.MONTH));
+        //获取星期几，当前周三，返回4
+        System.out.println(calendar.get(Calendar.DAY_OF_WEEK));
     }
 }
