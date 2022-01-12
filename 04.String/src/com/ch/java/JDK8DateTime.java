@@ -2,9 +2,7 @@ package com.ch.java;
 
 import org.junit.Test;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 
 /**
  * @author chenpi
@@ -24,10 +22,10 @@ public class JDK8DateTime {
         LocalDate localDate = LocalDate.now();
         LocalTime localTime = LocalTime.now();
         LocalDateTime localDateTime = LocalDateTime.now();
-
         System.out.println(localDate);
         System.out.println(localTime);
         System.out.println(localDateTime);
+
         //方式二：of():设置指定的年、月、日、时、分、秒，没有偏移量
         LocalDateTime localDateTime1 = LocalDateTime.of(2022, 10, 1, 13, 23, 13);
         System.out.println(localDateTime1);
@@ -59,6 +57,33 @@ public class JDK8DateTime {
         System.out.println(localDateTime);
         System.out.println(localDateTime5);
 
+    }
+    /*
+    Instant类的使用
+        类似于java.util.Date
+     */
+    @Test
+    public void test2(){
+        //实例化
+        //方式一：now() 获取本初子午线的标准时间
+        Instant instant = Instant.now();
+        System.out.println(instant);//2022-01-12T13:07:23.764Z
+
+        //添加时间的偏移量
+        OffsetDateTime offsetDateTime = instant.atOffset(ZoneOffset.ofHours(8));//+8小时——>北京时间
+        System.out.println(offsetDateTime);//2022-01-12T21:07:23.764+08:00
+
+        //获取自1970年1月1日0时0分0秒（UTC）开始的毫秒数
+        long milli= instant.toEpochMilli();
+        System.out.println(milli);//1641993149513
+
+        //方式二：ofEpochMilli()用过给定的毫秒数，获取Instant实例
+        Instant instant1 = Instant.ofEpochMilli(milli);
+        System.out.println(instant1);//2022-01-12T13:12:29.513Z
+
 
     }
+    /*
+    DateTimeForMatter类
+     */
 }
