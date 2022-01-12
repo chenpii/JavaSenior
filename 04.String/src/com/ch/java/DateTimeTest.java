@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -100,7 +101,32 @@ public class DateTimeTest {
         }else{
             System.out.println("晒网");
         }
+    }
 
+    /*
+    Calendar日历类（抽象类）的使用
+     */
+    @Test
+    public void testCalendar(){
+        //1.实例化
+        //方式一：创建其子类GregorianCalendar对象
+        //方式二：调用getInstance方法
+        Calendar calendar = Calendar.getInstance();
+
+        //2.常用方法
+        //get()
+        int days = calendar.get(Calendar.DAY_OF_MONTH);//当月的第几天
+        System.out.println(days);
+
+        System.out.println(calendar.get(Calendar.DAY_OF_YEAR));//当年的第几天
+
+        //set()
+
+        //add()
+
+        //getTime()
+
+        //setTime()
 
 
     }
