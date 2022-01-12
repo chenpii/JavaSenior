@@ -115,19 +115,35 @@ public class DateTimeTest {
 
         //2.常用方法
         //get()
-        int days = calendar.get(Calendar.DAY_OF_MONTH);//当月的第几天
+        //返回当月的第几天
+        int days = calendar.get(Calendar.DAY_OF_MONTH);
         System.out.println(days);
-
-        System.out.println(calendar.get(Calendar.DAY_OF_YEAR));//当年的第几天
+        //返回当年的第几天
+        System.out.println(calendar.get(Calendar.DAY_OF_YEAR));
 
         //set()
+        //设置为当月的第28天
+        calendar.set(Calendar.DAY_OF_MONTH,28);
+        days = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println(days);
 
         //add()
+        //在当前基础上加3天
+        calendar.add(Calendar.DAY_OF_MONTH,3);
+        days = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println(days);
+        //在当前基础上减3天
+        calendar.add(Calendar.DAY_OF_MONTH,-3);
+        days = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println(days);
 
-        //getTime()
+        //getTime():日历类——>Date
+        Date date = calendar.getTime();
+        System.out.println(date);
 
-        //setTime()
-
-
+        //setTime():Date——>日历类
+        Date date1 =new Date();
+        calendar.setTime(date1);
+        System.out.println(calendar.get(Calendar.DAY_OF_MONTH));
     }
 }
