@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -100,8 +101,54 @@ public class DateTimeTest {
         }else{
             System.out.println("晒网");
         }
+    }
 
+    /*
+    Calendar日历类（抽象类）的使用
+     */
+    @Test
+    public void testCalendar(){
+        //1.实例化
+        //方式一：创建其子类GregorianCalendar对象
+        //方式二：调用getInstance方法
+        Calendar calendar = Calendar.getInstance();
 
+        //2.常用方法
+        //get()
+        //返回当月的第几天
+        int days = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println(days);
+        //返回当年的第几天
+        System.out.println(calendar.get(Calendar.DAY_OF_YEAR));
 
+        //set()
+        //设置为当月的第28天
+        calendar.set(Calendar.DAY_OF_MONTH,28);
+        days = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println(days);
+
+        //add()
+        //在当前基础上加3天
+        calendar.add(Calendar.DAY_OF_MONTH,3);
+        days = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println(days);
+        //在当前基础上减3天
+        calendar.add(Calendar.DAY_OF_MONTH,-3);
+        days = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println(days);
+
+        //getTime():日历类——>Date
+        Date date = calendar.getTime();
+        System.out.println(date);
+
+        //setTime():Date——>日历类
+        Date date1 =new Date();
+        calendar.setTime(date1);
+        System.out.println(calendar.get(Calendar.DAY_OF_MONTH));
+
+        //获取月份，当前1月，返回0
+        System.out.println(calendar.get(Calendar.MONTH));
+        //获取星期几，当前周三，返回4
+        System.out.println(calendar.get(Calendar.DAY_OF_WEEK));
     }
 }
