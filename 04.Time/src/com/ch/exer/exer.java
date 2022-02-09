@@ -95,6 +95,6 @@ public class exer {
             }
         });
         System.out.println(Arrays.toString(arr));
-    
+
     }
 }
