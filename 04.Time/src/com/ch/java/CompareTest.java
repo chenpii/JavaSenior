@@ -89,16 +89,18 @@ public class CompareTest {
         });
 
         System.out.println(Arrays.toString(arr));
+        //排序结果：[DD, CC, BB, AA]
     }
 
     @Test
     public void test4() {
-        Goods[] arr = new Goods[5];
+        Goods[] arr = new Goods[6];
         arr[0] = new Goods("lenovoMouse", 34);
         arr[1] = new Goods("dellMouse", 43);
         arr[2] = new Goods("xiaomiMouse", 12);
         arr[3] = new Goods("huaweiMouse", 65);
         arr[4] = new Goods("microsoftMouse", 65);
+        arr[5] = new Goods("huaweiMouse", 50);
 
         Arrays.sort(arr, new Comparator() {
             //指明商品比较大小的方式:产品名称升序，再按照价格降序。
@@ -122,9 +124,9 @@ public class CompareTest {
         //排序结果
 //        [Goods{name='dellMouse', price=43.0},
 //        Goods{name='huaweiMouse', price=65.0},
+//        Goods{name='huaweiMouse', price=50.0},
 //        Goods{name='lenovoMouse', price=34.0},
 //        Goods{name='microsoftMouse', price=65.0},
 //        Goods{name='xiaomiMouse', price=12.0}]
-
     }
 }
