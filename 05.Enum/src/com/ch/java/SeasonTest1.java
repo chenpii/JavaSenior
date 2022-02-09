@@ -12,6 +12,17 @@ public class SeasonTest1 {
         Season1 sumber = Season1.SUMMER;
         System.out.println(sumber);
         System.out.println(Season1.class.getSuperclass());
+
+        //values():
+        Season1[] values=Season1.values();
+        for (int i = 0; i < values.length; i++) {
+            System.out.println(values[i]);
+        }
+
+        //valueof(String objName):返回枚举类中对象名是objName的对象；若没有，则抛异常：IllegalArgumentException
+        Season1 winter = Season1.valueOf("WINTER");
+        System.out.println(winter);
+
     }
 }
 //使用enum关键字定义枚举类
