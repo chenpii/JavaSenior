@@ -48,6 +48,13 @@ public class CompareTest {
 
         Arrays.sort(arr);
         System.out.println(Arrays.toString(arr));
+        //排序结果
+//        [Goods{name='xiaomiMouse', price=12.0},
+//        Goods{name='lenovoMouse', price=34.0},
+//        Goods{name='dellMouse', price=43.0},
+//        Goods{name='microsoftMouse', price=65.0},
+//        Goods{name='huaweiMouse', price=65.0}]
+
     }
 
 }
