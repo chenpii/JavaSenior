@@ -36,7 +36,7 @@ enum Season1 implements show{
     SPRING("春天", "春暖花开"){
         @Override
         public void show() {
-            System.out.println("春天在哪里？");
+            System.out.println("春天在哪里");
         }
     },
     SUMMER("夏天", "夏日炎炎"){
