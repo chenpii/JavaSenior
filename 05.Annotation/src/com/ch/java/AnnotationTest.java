@@ -63,6 +63,7 @@ interface info {
 }
 
 @MyAnnotation(value = "hi")
+@MyAnnotation(value = "abc")
 class Persion {
     private String name;
     private int age;
