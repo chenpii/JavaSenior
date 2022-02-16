@@ -1,14 +1,32 @@
 package com.ch.java;
 
-/**一、集合
- * 1.集合、数组都是对多个数据存储的结构，简称java容器。
- *  说明：此时的存储，主要指的内存层面的存储。
- *
- * 2.数组存储存在弊端：长度确定、类型统一，且不能满足无需、不可重复的需求。
- *
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+/**
+ * Collection涓０鏄庢柟娉曠殑娴嬭瘯
  *
  * @author chenpi
  * @create 2022-02-15 23:20
  */
 public class CollectionTest {
+    @Test
+    public void test1(){
+        Collection coll =new ArrayList();
+        coll.add(123);
+        coll.add("abc");
+        coll.add(new String("def"));
+        coll.add(false);
+        Person p = new Person("Tom", 23);
+        coll.add(p);
+
+        //contains(Object obj)
+        System.out.println(coll.contains("abc"));
+        System.out.println(coll.contains(new String("def")));
+        System.out.println(coll.contains(new Person("Tom", 23)));
+
+
+    }
 }
