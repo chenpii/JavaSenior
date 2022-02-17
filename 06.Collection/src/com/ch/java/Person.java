@@ -49,4 +49,12 @@ public class Person {
         result = 31 * result + age;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }
