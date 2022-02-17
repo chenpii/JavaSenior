@@ -96,8 +96,14 @@ public class CollectionTest {
         coll.add(false);
         coll.add(new Person("Tom", 23));
 
-
+        //7.hashCode() :返回当前对象的哈希值
         System.out.println(coll.hashCode());
+
+        //8.toArray 集合——>数组
+        Object[] arr = coll.toArray();
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(arr[i]);
+        }
 
     }
 }
