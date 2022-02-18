@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Collection中声明方法的测试
@@ -99,11 +100,16 @@ public class CollectionTest {
         //7.hashCode() :返回当前对象的哈希值
         System.out.println(coll.hashCode());
 
-        //8.toArray 集合——>数组
+        //8.1 集合——>数组 toArray()
         Object[] arr = coll.toArray();
         for (int i = 0; i < arr.length; i++) {
             System.out.println(arr[i]);
         }
 
+        //8.1 数组——>集合 Arrays.asList()
+        List<String> arr1 = Arrays.asList(new String[]{"aa", "bb", "cc"});
+        System.out.println(arr);
+
+        //9.iterator() :返回Iterator接口的实例，用于遍历集合元素。放在iteratorTest中
     }
 }
