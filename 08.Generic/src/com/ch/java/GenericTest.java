@@ -2,9 +2,7 @@ package com.ch.java;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * @author chenpi
@@ -26,18 +24,22 @@ public class GenericTest {
             System.out.println(iterator.next());
         }
 
-        HashMap<String, Integer> stringIntegerHashMap = new HashMap<>();
-        stringIntegerHashMap.put("tom",24);
-        stringIntegerHashMap.put("Jack",23);
-        stringIntegerHashMap.put("Amy",24);
-        stringIntegerHashMap.put("Merry",27);
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("tom",24);
+        map.put("Jack",23);
+        map.put("Amy",24);
+        map.put("Merry",27);
         //编译报错
 //        stringIntegerHashMap.put("Jerry","12");
         System.out.println("**********");
-        for (String s : stringIntegerHashMap.keySet()) {
-            Integer value = stringIntegerHashMap.get(s);
+        for (String s : map.keySet()) {
+            Integer value = map.get(s);
             System.out.println(value);
 
         }
+
+        //泛型的嵌套
+        Set<Map.Entry<String, Integer>> entrySet = map.entrySet();
+        Iterator<Map.Entry<String, Integer>> iterator1 = entrySet.iterator();
     }
 }
