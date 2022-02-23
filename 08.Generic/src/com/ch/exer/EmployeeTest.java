@@ -22,25 +22,39 @@ public class EmployeeTest {
     //问题二：按生日的升序排
     @Test
     public void test2() {
-        TreeSet set = new TreeSet(new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                if (o1 instanceof Employee && o2 instanceof Employee) {
-                    Employee e1 = (Employee) o1;
-                    Employee e2 = (Employee) o2;
-                    MyDate b1 = e1.getBirthday();
-                    MyDate b2 = e2.getBirthday();
+        TreeSet<Employee> set = new TreeSet<Employee>(new Comparator<Employee>() {
 
-                    if ((b1.getYear() - b2.getYear()) != 0) {
-                        return b1.getYear() - b2.getYear();
-                    } else if ((b1.getMonth() - b2.getMonth()) != 0) {
-                        return b1.getMonth() - b2.getMonth();
-                    } else {
-                        return b1.getDay() - b2.getDay();
-                    }
+            //指明泛型的写法
+            @Override
+            public int compare(Employee o1, Employee o2) {
+                if ((o1.getBirthday().getYear() - o2.getBirthday().getYear()) != 0) {
+                    return o1.getBirthday().getYear() - o2.getBirthday().getYear();
+                } else if ((o1.getBirthday().getMonth() - o2.getBirthday().getMonth()) != 0) {
+                    return o1.getBirthday().getMonth() - o2.getBirthday().getMonth();
+                } else {
+                    return o1.getBirthday().getDay() - o2.getBirthday().getDay();
                 }
-                throw new RuntimeException("输入的类型不一致");
             }
+
+            //没指明泛型的写法
+//            @Override
+//            public int compare(Object o1, Object o2) {
+//                if (o1 instanceof Employee && o2 instanceof Employee) {
+//                    Employee e1 = (Employee) o1;
+//                    Employee e2 = (Employee) o2;
+//                    MyDate b1 = e1.getBirthday();
+//                    MyDate b2 = e2.getBirthday();
+//
+//                    if ((b1.getYear() - b2.getYear()) != 0) {
+//                        return b1.getYear() - b2.getYear();
+//                    } else if ((b1.getMonth() - b2.getMonth()) != 0) {
+//                        return b1.getMonth() - b2.getMonth();
+//                    } else {
+//                        return b1.getDay() - b2.getDay();
+//                    }
+//                }
+//                throw new RuntimeException("输入的类型不一致");
+//            }
         });
         Employee e1 = new Employee("Tom", 45, new MyDate(1965, 5, 1));
         Employee e2 = new Employee("Jack", 17, new MyDate(1978, 8, 1));
@@ -54,12 +68,10 @@ public class EmployeeTest {
         set.add(e4);
         set.add(e5);
 
-        Iterator iterator = set.iterator();
+        Iterator<Employee> iterator = set.iterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }
-
-
     }
 
     //问题一：使用自然排序

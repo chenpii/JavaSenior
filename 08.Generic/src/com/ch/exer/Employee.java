@@ -58,6 +58,7 @@ public class Employee implements Comparable<Employee>{
     }
 
     //指明泛型的写法
+    //按name升序
     @Override
     public int compareTo(Employee o) {
         return this.name.compareTo(o.name);
