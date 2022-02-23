@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class GenericTest {
     @Test
-    public void test1(){
+    public void test1() {
         ArrayList<Integer> arrayList = new ArrayList<>();
 
         arrayList.add(11);
@@ -20,26 +20,25 @@ public class GenericTest {
         //编译时报错
 //        arrayList.add("12");
         Iterator<Integer> iterator = arrayList.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }
 
         HashMap<String, Integer> map = new HashMap<>();
-        map.put("tom",24);
-        map.put("Jack",23);
-        map.put("Amy",24);
-        map.put("Merry",27);
-        //编译报错
-//        stringIntegerHashMap.put("Jerry","12");
-        System.out.println("**********");
-        for (String s : map.keySet()) {
-            Integer value = map.get(s);
-            System.out.println(value);
-
-        }
+        map.put("tom", 24);
+        map.put("Jack", 23);
+        map.put("Amy", 24);
+        map.put("Merry", 27);
 
         //泛型的嵌套
         Set<Map.Entry<String, Integer>> entrySet = map.entrySet();
         Iterator<Map.Entry<String, Integer>> iterator1 = entrySet.iterator();
+        System.out.println("**********");
+        while (iterator1.hasNext()) {
+            Map.Entry<String, Integer> entry = iterator1.next();
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            System.out.println(key + "-->" + value);
+        }
     }
 }
