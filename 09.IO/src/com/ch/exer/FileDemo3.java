@@ -19,6 +19,9 @@ public class FileDemo3 {
         File iodir3 = new File("iodir3");
         showAll(iodir3);
         System.out.println(getSizeAll(iodir3));
+
+        File dir = new File("iodir3\\conf\\nacos");
+        removeAll(dir);
     }
 
 
@@ -28,33 +31,49 @@ public class FileDemo3 {
      * @param file
      */
     public void showAll(File file) {
-        File[] files = file.listFiles();
-        for (File f : files) {
-            if (f.isDirectory()) {
-                showAll(f);
+        for (File listFile : file.listFiles()) {
+            if (listFile.isDirectory()) {
+                showAll(listFile);
             } else {
-                System.out.println(f);
+                System.out.println(listFile);
             }
         }
+
     }
 
     /**
      * 计算file目录大小
+     *
      * @param file
      * @return
      */
     public long getSizeAll(File file) {
-        File[] files = file.listFiles();
         long size = 0;
-        for (File f : files) {
-            if (f.isDirectory()) {
-                getSizeAll(f);
+        for (File listFile : file.listFiles()) {
+            if (listFile.isDirectory()) {
+                size += getSizeAll(listFile);
             } else {
-                size += f.length();
-                System.out.println(f);
+                size += listFile.length();
             }
         }
         return size;
+    }
+
+    /**
+     * 删除指定目录
+     *
+     * @param file
+     */
+    public void removeAll(File file) {
+        for (File listFile : file.listFiles()) {
+            if (listFile.isDirectory()) {//删除子目录
+                removeAll(listFile);
+            } else {
+                listFile.delete();//删除文件
+            }
+
+        }
+        file.delete();//删除目录本身
     }
 
 }
