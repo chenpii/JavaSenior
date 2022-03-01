@@ -1,0 +1,143 @@
+spring:
+  codec:
+    max-in-memory-size: 50MB
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+  redis:
+    timeout: 5000
+    host: ${REDIS_HOST:172.16.4.101}
+    port: ${REDIS_PORT:16379}
+    password: ${REDIS_PASSWORD:123456}
+    lettuce:
+      pool:
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制） 默认 -1
+        max-wait: -1
+        # 连接池中的最大空闲连接 默认 8
+        max-idle: 8
+        # 连接池中的最小空闲连接 默认 0
+        min-idle: 0
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:${DATASOURCE_DBTYPE:mysql}://${DATASOURCE_HOST:172.16.4.101}:${DATASOURCE_PORT:3308}/uias_authorization_center?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+    username: ${DATASOURCE_USERNAME:uias_authorization_center}
+    password: ${DATASOURCE_PASSWORD:xxxxxx}
+
+mybatis-plus:
+  # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml
+  # 如果是放在resource目录 classpath:/mapper/*Mapper.xml
+  mapper-locations: classpath:mapper/mysql/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.hzsun.uias.authorization.entity
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 0
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 1
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    capital-mode: true
+    # Sequence序列接口实现类配置
+    #key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
+    #逻辑删除配置（下面3个配置）
+    #logic-delete-value: 1
+    #logic-not-delete-value: 0
+    #sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+    #自定义填充策略接口实现
+    #meta-object-handler: com.baomidou.springboot.MyMetaObjectHandler
+  configuration:
+    map-underscore-to-camel-case: true
+    #输出SQL
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    cache-enabled: false
+    #配置JdbcTypeForNull
+    jdbc-type-for-null: 'null'     
+feign:
+  hystrix:
+    enabled: true
+hystrix:
+  threadpool:
+    default:
+      ##并发执行的最大线程数，默认10
+      coreSize: 200
+      ## BlockingQueue的最大队列数
+      maxQueueSize: 1000
+      ## 即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝
+      queueSizeRejectionThreshold: 800
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          strategy: THREAD
+          semaphore:
+            maxConcurrentRequests: 1000
+          thread:
+            timeoutInMilliseconds: 30000
+#ribbon的超时时间, 防止feign调用超时
+ribbon:
+  ReadTimeout: 20000
+  ConnectTimeout: 20000
+  #同一台实例最大重试次数,不包括首次调用
+  MaxAutoRetries: 1
+  #重试负载均衡其他的实例最大重试次数,不包括首次调用
+  MaxAutoRetriesNextServer: 1
+  #是否所有操作都重试
+  OkToRetryOnAllOperations: false
+
+sso:
+  client:
+    id: 0nxU64MCkjm2guwCvIpJdDGmc3UsTZAd
+    secret: V5ol5NK3NOvYveApY5TLZ60d0deIs2nT
+  authentication:
+    token:
+      url: http://172.16.4.101:16102/index/token
+      
+authorization:
+  front:
+    url: //172.16.4.101:16201/uias-auth/
+    name: uias-auth
+zy:
+  home:
+    app:
+      id: QNnUpH6gcL2nOFREJ2ohgXeSxcFPEg80
+      secret: 2ImfNlRsCGCj4uLycMxVvYSXRpGDekcH
+  # 该配置已废弃,后续删除
+  init:
+    apps:
+      # 用户管理中心
+      - app-id: cf3onPfcYwgcWh8yVWPlQSMH1N3Gffe8
+        url: http://172.16.4.101:16200/transit
+      # 授权管理中心
+      - app-id: 0nxU64MCkjm2guwCvIpJdDGmc3UsTZAd
+        url: http://172.16.4.101:16201/transit
+      # 安全审计中心
+      - app-id: 57e9ee2e8a494625b11e73dca5b8362e
+        url: http://172.16.4.101:16203/transit
+      # 门户管理系统
+      - app-id: 58cb6dafd7bc404da2f97ae59ab61e03
+        url: http://172.16.4.101:16205/transit
+  auth:
+    exclude:
+      - 'QNnUpH6gcL2nOFREJ2ohgXeSxcFPEg80'
+      - 'f39745276ab6424db2cb2545ee70ac62'
+  oss:
+    #文件服务器地址
+    endpoint: http://172.16.4.35:31507
+    # 上传路径，文件服务集群版/group1/upload，单机版/upload
+    upload-path: /group1/upload
+rocketmq:
+  name-server: 172.16.4.101:9876
+  authentication:
+    consumer:
+      topic: authentication-center-service
+  user-center:
+    consumer:
+      topic: user-center-service
+    

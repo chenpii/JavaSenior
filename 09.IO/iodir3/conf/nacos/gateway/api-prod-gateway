@@ -1,0 +1,333 @@
+## 区分正式网关还是沙箱网关
+gateway:
+  name: api-prod-gateway
+
+## 限流配置 Cloud 2020.03版本可能已不启作用 待验证
+hystrix:
+  threadpool:
+    default:
+      ##并发执行的最大线程数，默认10
+      coreSize: 200
+      ## BlockingQueue的最大队列数
+      maxQueueSize: 1000
+      ## 即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝
+      queueSizeRejectionThreshold: 800
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          strategy: THREAD
+          semaphore:
+            maxConcurrentRequests: 1000
+          thread:
+            timeoutInMilliseconds: 30000
+
+
+## Ribbon的超时时间, 防止feign调用超时   Cloud 2020.03版本可能已不启作用 待验证
+ribbon:
+  ReadTimeout: 20000
+  ConnectTimeout: 20000
+  #同一台实例最大重试次数,不包括首次调用
+  MaxAutoRetries: 1
+  #重试负载均衡其他的实例最大重试次数,不包括首次调用
+  MaxAutoRetriesNextServer: 1
+  #是否所有操作都重试
+  OkToRetryOnAllOperations: false
+
+## 路由端点(用于访问actuator，http://网关地址/actuator/gateway/routes)
+management:
+  endpoint:
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+## 数据相关配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  typeAliasesPackage: com.hzsun.gateway.entity
+  global-config:
+    id-type: 2
+    db-config:
+      select-strategy: not_empty
+      insert-strategy: not_empty
+      update-strategy: not_empty
+    db-column-underline: true
+    refresh-mapper: true
+  configuration:
+    #输出SQL
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    database-id: mysql
+
+## 路由   
+config:
+  dynamic:
+    route:
+      dataId: gateway-router
+      group: DEFAULT_GROUP
+
+## Feign的熔断器
+feign:
+  hystrix:
+    enabled: true
+  circuitbreaker:
+    enabled: true
+
+spring:
+  ## Redis配置
+  redis:
+    host: ${REDIS_HOST:172.16.4.101}
+    port: ${REDIS_PORT:16379}
+    password: ${REDIS_PASSWORD:123456}
+    ## 连接池配置
+    lettuce:
+      pool:
+        ## 最大激活连接
+        max-active: 500
+        ## 最大闲置连接
+        max-idle: 200
+        ## 最小闲置连接
+        min-idle: 50
+        ## 最大等待时间
+        maxWait: 10000
+        #每ms运行一次空闲连接回收器（独立线程）
+        time-between-eviction-runs: 100000
+  codec:
+    #10w条用户数据，返回数据达到5m
+    max-in-memory-size: 50MB
+    servlet:
+      multipart:
+        max-file-size: 10MB
+        max-request-size: 100MB
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.16.4.101:3308/uias_gw_prod?allowMultiQueries=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+    username: uias_gw_prod
+    password: xxxxxx
+    druid:
+      # 初始化大小，最小，最大
+      initial-size: 5
+      min-idle: 5
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      # poolPreparedStatements: true
+      # maxPoolPreparedStatementPerConnectionSize: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+      # 配置DruidStatFilter
+      web-stat-filter:
+        enabled: true
+        url-pattern: "/*"
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+      # 配置DruidStatViewServlet
+      stat-view-servlet:
+        url-pattern: "/druid/*"
+        # IP白名单(没有配置或者为空，则允许所有访问)
+        #        allow: 127.0.0.1,192.168.163.1
+        # IP黑名单 (存在共同时，deny优先于allow)
+        #        deny: 192.168.1.73
+        #  禁用HTML页面上的“Reset All”功能
+        reset-enable: false
+        # 登录名
+        login-username: admin
+        # 登录密码
+        login-password: admin
+  cloud:
+    gateway:
+      globalcors:
+          corsConfigurations:
+            '[/**]':
+              ## Cloud 2020.03版本 不支持设为True
+              allowCredentials: false
+              allowedOrigins: "*"
+              allowedHeaders: "*"
+              allowedMethods: "*"
+              maxAge: 3628800
+      discovery:
+        locator:
+          enabled: true 
+      routes:
+      ## 统一身份认证相关服务 ###########################   
+      ## 认证服务
+      - id: uias-authentication
+        uri: lb://authentication-center-service
+        predicates:
+          - Path=/uias/authentication/**
+        filters:
+          - RewritePath=/uias/authentication/(?<segment>.*), /$\{segment}
+          - SessionAuth
+      ## 授权服务
+      - id: uias-authorization
+        uri: lb://authorization-center-service
+        predicates:
+          - Path=/uias/authorization/**
+        filters:
+          - RewritePath=/uias/authorization/(?<segment>.*), /$\{segment}
+          - SessionAuth
+      ## 用户中心
+      - id: user-center
+        uri: lb://user-center-service
+        predicates:
+          - Path=/user-center/**
+        filters:
+          - RewritePath=/user-center/(?<segment>.*), /$\{segment}
+          - SessionAuth
+      ## 日志中心
+      - id: log-center
+        uri: lb://log-center-service
+        predicates:
+          - Path=/log-center/**
+        filters:
+          - RewritePath=/log-center/(?<segment>.*), /$\{segment}
+          - SessionAuth
+      ## 审计中心
+      - id: audit-center
+        uri: lb://audit-center-service
+        predicates:
+          - Path=/uias/audit-center/**
+        filters:
+          - RewritePath=/uias/audit-center/(?<segment>.*), /$\{segment}
+          - SessionAuth
+      ## 门户后端
+      - id: uias-portal
+        uri: lb://portal-manage-service
+        predicates:
+          - Path=/uias/portal-manage/**
+        filters:
+          - RewritePath=/uias/portal-manage/(?<segment>.*), /$\{segment}
+          - SessionAuth
+      ## 授权通用接口
+      - id: uias-ac-url
+        uri: lb://authorization-center-service
+        predicates:
+          - Path=/uias/common/ac
+        filters:
+          - RewritePath=/uias/common/ac, /common/ac
+
+      #################################################
+
+      ## 统一身份认证 单点登录 ##################################### 
+      ## 单点账号登录接口
+      - id: uias-login
+        uri: lb://authentication-center-service
+        predicates:
+          - Path=/uias/login
+        filters:
+          - RewritePath=/uias/login, /index/login
+      ## 单点人脸登录接口
+      - id: uias-face-login
+        uri: lb://authentication-center-service
+        predicates:
+          - Path=/uias/face/login
+        filters:
+          - RewritePath=/uias/face/login, /index/face/login
+      ## 微信登录接口
+      - id: weChat-login
+        uri: lb://authentication-center-service
+        predicates:
+          - Path=/uias/weChat/login
+        filters:
+          - RewritePath=/uias/weChat/login, /index/weChat/login
+      ## 单点登录页面地址
+      - id: uias-login-page
+        uri: lb://authentication-center-service
+        predicates:
+          - Path=/uias/login-page
+        filters:
+          - RewritePath=/uias/login-page, /index/login-page
+      ## 单点登录获取Code
+      - id: uias-token-code
+        uri: lb://authentication-center-service
+        predicates:
+          - Path=/uias/token/code
+        filters:
+          - RewritePath=/uias/token/code, /index/token/code
+      ## 单点登录获取Token
+      - id: uias-token
+        uri: lb://authentication-center-service
+        predicates:
+          - Path=/uias/token
+        filters:
+          - RewritePath=/uias/token, /index/token
+      ## 单点登录校验Token
+      - id: uias-token-result
+        uri: lb://authentication-center-service
+        predicates:
+          - Path=/uias/token/result
+        filters:
+          - RewritePath=/uias/token/result, /index/token/result
+      ## 单点登录退出
+      - id: uias-logout
+        uri: lb://authentication-center-service
+        predicates:
+          - Path=/uias/logout
+        filters:
+          - RewritePath=/uias/logout, /index/logout
+      #########################################################
+
+      
+      ## 能力开放平台 相关服务##################################
+      - id: ocp-authorization-service
+        uri: lb://ocp-authorization-service
+        predicates:
+          - Path=/api/ocp/authorization/**
+        filters:
+          - RewritePath=/api/ocp/authorization/(?<segment>.*), /$\{segment}
+      ## 能力平台后台服务
+      - id: ocp-manager
+        uri: lb://ocp-manager-service
+        predicates:
+          - Path=/ocp/manager/**
+        filters:
+          - SessionAuth
+          - RewritePath=/ocp/manager/(?<segment>.*), /$\{segment}
+      ## 能力平台应用后台
+      - id: ocp-portal-manager
+        uri: lb://ocp-manager-service
+        predicates:
+          - Path=/portal/manager/**
+        filters:
+          - OcpPortalSessionAuth
+          - RewritePath=/portal/manager/(?<segment>.*), /$\{segment}
+      ###################################################
+
+
+
+sso:
+  authentication:
+    token:
+      result:
+        url: http://172.16.4.101:16102/index/token/result
+    exclude-paths:
+      ## 统一身份认证
+      - '**/oauth/**'
+      - '**/index/**'
+
+      ## 能力开放平台
+      - '/portal/**'
+      - '**/portal/upload'
+      - '**/portal/base64'
+      - '**/portal/info'
+      - '**/portal/dev/guide/capacity'
+      - '**/protocol/portal/'
+      - '**/portal/app/developer'
+      - '**/easytong/token'
