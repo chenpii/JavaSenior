@@ -130,4 +130,45 @@ public class FileReaderWriterTest {
             }
         }
     }
+
+    @Test
+    public void testFileReaderFileWriter() {
+        FileReader fr = null;
+        FileWriter fw = null;
+
+        try {
+            //1.提供File类的对象，指明读入和写出的文件
+            File srcFile = new File("hello.txt");
+            File destFile = new File("hello1.txt");
+
+            //2.提供流的对象
+            fr = new FileReader(srcFile);
+            fw = new FileWriter(destFile);
+
+            //3.读入、写出数据
+            char[] cbuf = new char[5];
+            int len;
+            while ((len = fr.read(cbuf)) != -1) {
+                fw.write(cbuf, 0, len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //4.关闭流资源
+            try {
+                if (fr != null)
+                    fr.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (fw != null)
+                    fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
 }
