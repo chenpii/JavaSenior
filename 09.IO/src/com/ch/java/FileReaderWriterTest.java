@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -83,7 +84,7 @@ public class FileReaderWriterTest {
 //                }
 
                 //方式二：char数组转String
-                String str =new String(cbuffer,0,len);
+                String str = new String(cbuffer, 0, len);
                 System.out.print(str);
 
             }
@@ -94,6 +95,35 @@ public class FileReaderWriterTest {
             try {
                 if (fr != null) {
                     fr.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 从内存中写数据到硬盘文件里
+     */
+    @Test
+    public void testFileWriter() {
+        FileWriter fw = null;
+        try {
+            //1.提供File类的对象，指明要导出的文件
+            File file = new File("hello1.txt");
+            //2.提供流的对象
+            fw = new FileWriter(file, false);
+
+            //3.导出数据
+            fw.write("I have a dream!\n");
+            fw.write("you need a dream!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //4.关闭流资源
+            try {
+                if (fw != null) {
+                    fw.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
