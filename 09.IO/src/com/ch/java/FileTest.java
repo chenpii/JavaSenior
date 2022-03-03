@@ -152,26 +152,28 @@ public class FileTest {
         if (!file1.exists()) {
             file1.createNewFile();
             System.out.println("创建成功");
-        }else {
+        } else {
             file1.delete();
             System.out.println("删除成功");
         }
 
 
     }
+
     @Test
-    public void test7(){
-        File file=new File("E:\\developer\\io1\\io3");
+    public void test7() {
+        File file = new File("E:\\developer\\io1\\io3");
         boolean mkdir = file.mkdir();
-        if(mkdir){
+        if (mkdir) {
             System.out.println("创建成功1");
         }
 
 
-        File file2=new File("E:\\developer\\io\\io2\\io3");
+        File file2 = new File("E:\\developer\\io\\io2\\io3");
         boolean mkdir2 = file2.mkdirs();
-        if(mkdir2){
+        if (mkdir2) {
             System.out.println("创建成功2");
         }
     }
+
 }
