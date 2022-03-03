@@ -56,8 +56,8 @@ public class GetRows {
                 nullCellNum = 0;
                 for (int j = 0; j < rsCols; j++) {
                     String val = sheet.getCell(j, i).getContents();
-                    val = StringUtils.trimToEmpty(val);
-                    if (StringUtils.isBlank(val))
+//                    val = StringUtils.trimToEmpty(val);
+//                    if (StringUtils.isBlank(val))
                         nullCellNum++;
                 }
                 if (nullCellNum >= rsCols) { // 如果nullCellNum大于或等于总的列数

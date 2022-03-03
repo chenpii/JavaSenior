@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="jxl-2.6.8">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../../../智慧餐厅3.0-高校版/trunk/01.开发库/060.测试/040.测试脚本/01 接口自动化/script/V210630/data/jar/jxl-2.6.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../mylibs/jxl.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
