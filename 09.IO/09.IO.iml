@@ -7,7 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library name="JUnit4">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.13.1/junit-4.13.1.jar!/" />
@@ -17,6 +17,24 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="jxl-2.6.8" level="project" />
+    <orderEntry type="library" exported="" name="jxl-2.6.8" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library name="poi-5.0.0">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../../../../mylibs/poi-bin-5.0.0-20210120/poi-5.0.0" />
+          <root url="file://$MODULE_DIR$/../../../../mylibs/poi-bin-5.0.0-20210120/poi-5.0.0/ooxml-lib" />
+          <root url="file://$MODULE_DIR$/../../../../mylibs/poi-bin-5.0.0-20210120/poi-5.0.0/lib" />
+          <root url="file://$MODULE_DIR$/../../../../mylibs/poi-bin-5.0.0-20210120/poi-5.0.0/auxiliary" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="file://$MODULE_DIR$/../../../../mylibs/poi-bin-5.0.0-20210120/poi-5.0.0/docs/apidocs/dev" />
+        </JAVADOC>
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/../../../../mylibs/poi-bin-5.0.0-20210120/poi-5.0.0" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../../../../mylibs/poi-bin-5.0.0-20210120/poi-5.0.0/auxiliary" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../../../../mylibs/poi-bin-5.0.0-20210120/poi-5.0.0/lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../../../../mylibs/poi-bin-5.0.0-20210120/poi-5.0.0/ooxml-lib" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>

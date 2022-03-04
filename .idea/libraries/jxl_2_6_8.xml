@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="jxl-2.6.8">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../../mylibs/jxl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../mylibs/jxl-2.6.8.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
