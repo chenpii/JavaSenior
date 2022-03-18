@@ -2,6 +2,7 @@ package com.ch.java;
 
 import org.junit.Test;
 
+import java.lang.annotation.ElementType;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -73,4 +74,52 @@ public class ReflectionTest {
         System.out.println(nation);
 
     }
+
+    //获取Class实例
+    @Test
+    public void test3() throws ClassNotFoundException {
+        //方式一：调用运行时类的属性：.class
+        Class clazz1 = Person.class;
+        System.out.println(clazz1);
+
+        //方式二：通过运行时类的对象，调用getClass()方法
+        Person p1 = new Person();
+        Class clazz2 = p1.getClass();
+        System.out.println(clazz2);
+
+        //方式三：调用Class的静态方法：forName(String classPath)
+        Class clazz3 = Class.forName("com.ch.java.Person");
+        System.out.println(clazz3);
+		
+		System.out.println(clazz1==clazz2);//ture
+		System.out.println(clazz1==clazz3);//ture
+		
+		//方式四：类的加载器：ClassLoader  (了解)
+		ClassLoader classLoader = ReflectionTest.class.getClassLoader();
+		Class clazz4 = classLoader.loadClass("com.ch.java.Person");
+		System.out.println(clazz4);
+		System.out.println(clazz1==clazz4);//ture
+
+    }
+	
+	//哪些类可以有Class对象
+	@Test
+	public void test4(){
+		Class c1 = Object.class;
+		Class c2 = Comparable.class;
+		Class c3 = String[].class;
+		Class c4 = int[][].class;
+		Class c5 = ElementType.class;
+		Class c6 = Override.class;
+		Class c7 = int.class;
+		Class c8 = void.class;
+		Class c9 = Class.class;
+		
+		int[] a = new int[10];
+		int[] b = new int[100];
+		Class c10 = a.getClass();
+		Class c11 = b.getClass();
+		//只要元素类型和纬度一样，就是同一个Class
+		System.out.println(c10==c11);//true
+	}
 }
