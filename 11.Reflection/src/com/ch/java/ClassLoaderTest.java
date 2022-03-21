@@ -43,13 +43,11 @@ public class ClassLoaderTest {
         Properties pro = new Properties();
 
         //读取配置文件
-        //读取配置文件的方式一：
-        // 文件在当前module下
+        //方式一：文件在当前module下
         // FileInputStream fis = new FileInputStream("jdbc.properties");
         // pro.load(fis);
 
-        //读取配置文件的方式二：类加载器
-        //文件在当前module的src下
+        //方式二：类加载器，文件在当前module的src下
         ClassLoader classLoader = ClassLoaderTest.class.getClassLoader();
         InputStream is = classLoader.getResourceAsStream("jdbc1.properties");
         pro.load(is);
