@@ -4,6 +4,7 @@ package com.ch.java1;
  * @author chenpi
  * @create 2022-03-21 15:56
  */
+@MyAnnotation(value = "hi")
 public class Person extends Creature<String> implements Comparable<String>, MyInterface {
     private String name;
     int age;
@@ -12,6 +13,7 @@ public class Person extends Creature<String> implements Comparable<String>, MyIn
     public Person() {
     }
 
+    @MyAnnotation(value = "abc")
     private Person(String name) {
         this.name = name;
     }
@@ -21,13 +23,14 @@ public class Person extends Creature<String> implements Comparable<String>, MyIn
         this.age = age;
     }
 
+    @MyAnnotation
     private String show(String nation) {
         System.out.println("My nation is " + nation);
         return nation;
     }
 
-    public String display(String interests) {
-        return interests;
+    public String display(String interests, int age) throws NullPointerException,ClassCastException {
+        return interests + age;
     }
 
     @Override

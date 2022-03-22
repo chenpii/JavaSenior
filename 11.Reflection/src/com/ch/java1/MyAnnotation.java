@@ -12,7 +12,7 @@ import static java.lang.annotation.ElementType.LOCAL_VARIABLE;
  * @create 2022-03-21 16:58
  */
 @Target({TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE})
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface MyAnnotation {
-    String value();
+    String value() default "hello";
 }
