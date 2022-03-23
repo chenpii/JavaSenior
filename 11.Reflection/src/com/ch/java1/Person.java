@@ -29,7 +29,7 @@ public class Person extends Creature<String> implements Comparable<String>, MyIn
         return nation;
     }
 
-    public String display(String interests, int age) throws NullPointerException,ClassCastException {
+    public String display(String interests, int age) throws NullPointerException, ClassCastException {
         return interests + age;
     }
 
@@ -42,4 +42,18 @@ public class Person extends Creature<String> implements Comparable<String>, MyIn
     public int compareTo(String o) {
         return 0;
     }
+
+    private static void showDesc() {
+        System.out.println("I am a Good Person");
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", id=" + id +
+                '}';
+    }
+
 }

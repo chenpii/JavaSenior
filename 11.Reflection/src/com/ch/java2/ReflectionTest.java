@@ -3,7 +3,9 @@ package com.ch.java2;
 import com.ch.java1.Person;
 import org.junit.Test;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
  * 调用运行时类中指定的结构：属性、方法、构造器
@@ -75,7 +77,58 @@ public class ReflectionTest {
 
         //创建运行时类的对象
         Person p = (Person) clazz.newInstance();
-		
 
+        /*
+        1.获取指定的某个方法
+        getDeclaredMethod()
+            参数1：指明获取的方法的名称
+            参数2：指明获取的方法的参数列表
+         */
+        Method show = clazz.getDeclaredMethod("show", String.class);
+
+        //2.保证当前方法可访问
+        show.setAccessible(true);
+
+        /*
+        3.调用方法
+        invoke():
+            参数1：方法的调用者
+            参数2：给方法的形参赋值的实参
+            返回值：即为对应类中方法的返回值
+         */
+        Object returnValue = show.invoke(p, "China");
+
+        System.out.println(returnValue);
+
+
+        System.out.println("*************调用静态方法************");
+
+        Method showDesc = clazz.getDeclaredMethod("showDesc");
+        showDesc.setAccessible(true);
+        //如果调用的运行时类中的方法没有返回值，则返回null
+        Object returnV = showDesc.invoke(Person.class);
+        System.out.println(returnV);
+    }
+
+    /*
+    如何操作运行时类中指定的构造器
+     */
+    @Test
+    public void testConstructor() throws Exception {
+        Class clazz = Person.class;
+
+        //private Person(String name)
+        /*
+        1.获取指定的构造器
+            参数：指明构造器的参数列表
+         */
+        Constructor constructor = clazz.getDeclaredConstructor(String.class);
+
+        //2.保证此构造器可访问
+        constructor.setAccessible(true);
+
+        //3.调用此构造器创建运行时类的对象
+        Person jack = (Person) constructor.newInstance("Jack");
+        System.out.println(jack);
     }
 }
